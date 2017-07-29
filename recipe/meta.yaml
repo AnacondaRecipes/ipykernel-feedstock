@@ -16,7 +16,7 @@ build:
     - python -m ipykernel install --prefix %PREFIX%  # [win]
 
 requirements:
-  build:
+  host:
     - pip
     - python
     - jupyter_client
