@@ -21,11 +21,11 @@ requirements:
     - pip
     - python
     - jupyter_client
-    - ipython >=4.0
+    - ipython
     - tornado >=4.0
   run:
     - python
-    - ipython >=4.0
+    - ipython
     - traitlets >=4.1
     - jupyter_client
     - tornado >=4.0
