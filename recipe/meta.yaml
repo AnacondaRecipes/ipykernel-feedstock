@@ -32,7 +32,6 @@ requirements:
 
 test:
   requires:
-    - curio  # [unix]
     - nose
     - numpy
     - pytest
