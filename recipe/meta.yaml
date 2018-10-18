@@ -38,7 +38,10 @@ test:
     - ipykernel
   commands:
     - jupyter kernelspec list
-    - pytest --pyargs ipykernel
+    # TODO: investigate why tests often fail on Windows with
+    # RuntimeError: Kernel died before replying to kernel_info
+    # https://github.com/jupyter/jupyter_client/issues/154
+    - pytest --pyargs ipykernel  # [not win]
 
 about:
   home: https://ipython.org
