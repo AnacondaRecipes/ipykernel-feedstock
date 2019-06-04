@@ -10,10 +10,12 @@ source:
 
 build:
   number: 0
-  skip: True  # [py27]
+  skip: True  # [py<34]
   script:
-    - "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv"
-    - python -m ipykernel install --prefix {{ PREFIX }}
+    - {{ PYTHON }} setup.py bdist_wheel
+    - cd dist
+    - {{ PYTHON }} -m pip install ipykernel-{{ version }}-py3-none-any.whl --no-deps -vv
+    - {{ PYTHON }} -m ipykernel install --prefix {{ PREFIX }}
 
 requirements:
   host:
@@ -41,7 +43,7 @@ test:
     # TODO: investigate why tests often fail on Windows with
     # RuntimeError: Kernel died before replying to kernel_info
     # https://github.com/jupyter/jupyter_client/issues/154
-    - pytest --pyargs ipykernel  # [not win]
+    - pytest --pyargs ipykernel  # [unix]
 
 about:
   home: https://ipython.org
