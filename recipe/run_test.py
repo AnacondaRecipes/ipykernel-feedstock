@@ -17,12 +17,14 @@ print(raw_spec)
 spec = json.loads(raw_spec)
 
 print('\nChecking python executable', spec['argv'][0], '...')
+specfile_interp = os.path.expandvars(spec['argv'][0].replace('\\', '/'))
+expected_interp = os.path.expandvars(sys.executable.replace('\\', '/'))
 
-if spec['argv'][0].replace('\\', '/') != sys.executable.replace('\\', '/'):
+if specfile_interp != expected_interp:
     print('The kernelspec seems to have the wrong prefix. \n'
           'Specfile: {}\n'
           'Expected: {}'
-           ''.format(spec['argv'][0], sys.executable))
+           ''.format(specfile_interp, expected_interp))
     sys.exit(1)
 
 if os.name == 'nt':

@@ -9,12 +9,10 @@ source:
   sha256: b368ad13edb71fa2db367a01e755a925d7f75ed5e09fbd3f06c85e7a8ef108a8
 
 build:
-  number: 0
+  number: 1
   skip: True  # [py<34]
   script:
-    - {{ PYTHON }} setup.py bdist_wheel
-    - cd dist
-    - {{ PYTHON }} -m pip install ipykernel-{{ version }}-py3-none-any.whl --no-deps -vv
+    - {{ PYTHON }} -m pip install . --no-deps -vv
     - {{ PYTHON }} -m ipykernel install --sys-prefix
 
 requirements:
