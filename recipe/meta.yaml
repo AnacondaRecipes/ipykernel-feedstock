@@ -21,13 +21,16 @@ build:
 
 requirements:
   host:
+    - debugpy >=1
     - ipython >=5.0
     - jupyter_client
     - pip
     - python
   run:
+    - debugpy >=1
     - ipython >=5.0
     - jupyter_client
+    - matplotlib-inline >=0.1.0,<0.2.0
     - python
     - tornado >=4.2
     - traitlets >=4.1
