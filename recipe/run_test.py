@@ -6,6 +6,7 @@ import pkgutil
 import pytest
 import tempfile
 
+
 def go():
     py_major = sys.version_info[0]
     py_impl = platform.python_implementation().lower()
@@ -64,11 +65,12 @@ def go():
     # actually run the tests
     sys.exit(pytest.main(pytest_args))
 
+
 if __name__ == "__main__":
     if platform.system() == "Windows":
         with tempfile.TemporaryDirectory() as appdata:
             # prevent concurrent tests runs from overlapping Jupyter configs
-            os.environ['APPDATA'] = appdata
+            os.environ["APPDATA"] = appdata
             go()
     else:
         go()
