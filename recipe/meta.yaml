@@ -9,7 +9,7 @@ source:
   sha256: 4439459f171d77f35b7f7e72dace5d7c2dd10a5c9e2c22b173ad9048fbfe7656
 
 build:
-  number: 0
+  number: 1
   # TODO: restore pypy builds https://github.com/conda-forge/ipykernel-feedstock/issues/85
   skip: true  # [py<37 or python_impl == "pypy"]
   script:
@@ -53,7 +53,7 @@ test:
     - ipyparallel
     - matplotlib-base
     - nose
-    - numpy
+    - numpy >=1.16.1  # introduced numpy.core._multiarray_umath
     - pip
     - pytest !=5.3.4
     - pytest-cov
