@@ -56,7 +56,7 @@ test:
     - trio
     {% if not migrating %}
     - ipyparallel
-    - matplotlib-base
+    - matplotlib-base  # [not (ppc64le and py==310)]
     {% endif %}
 
   imports:
