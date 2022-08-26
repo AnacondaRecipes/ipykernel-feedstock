@@ -41,7 +41,7 @@ requirements:
     - matplotlib-inline >=0.1.0
     - nest-asyncio
     - packaging
-    - psutil
+    - psutil <5.9.0
     - pyzmq >=17
     - tornado >=6.1
     - traitlets >=5.1.0
