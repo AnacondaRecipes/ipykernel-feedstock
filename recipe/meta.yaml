@@ -51,7 +51,7 @@ test:
     - curio  # [not win]
     - flaky
     - jupyter_client
-    - numpy >=1.16.1  # introduced numpy.core._multiarray_umath
+    - numpy
     - pip
     - pytest >=6.0
     - pytest-cov
