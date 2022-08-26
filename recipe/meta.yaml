@@ -50,6 +50,7 @@ test:
   requires:
     - curio  # [not win]
     - flaky
+    - jupyter_client
     - numpy >=1.16.1  # introduced numpy.core._multiarray_umath
     - pip
     - pytest >=6.0
