@@ -54,22 +54,18 @@ def go():
         "--no-cov-on-fail",
     ]
 
-    skips = ["flaky"]
+    # 2022/8/29: CI issues on Prefect for linux platforms:
+    # The test_shutdown_subprocesses is failing has to do 
+    # with shutting down the system using process groups. 
+    # We put the entire build into a process group.
+    # It looks that the test is checking to see 
+    # that a child process or process group is shutdown after it’s requested to, but it’s not.
+    skips = ["flaky", "test_shutdown_subprocesses"]
 
     if len(skips) == 1:
         pytest_args += ["-k", "not {}".format(*skips)]
-    else:
-        # 2022/8/29: CI issues on Prefect for linux platforms:
-        # The test_shutdown_subprocesses is failing has to do 
-        # with shutting down the system using process groups. 
-        # We put the entire build into a process group.
-        # It looks that the test is checking to see 
-        # that a child process or process group is shutdown after it’s requested to, but it’s not.  
-        if platform.system() == 'Linux':
-            skips += ["test_shutdown_subprocesses"]
-            pytest_args += ["-k", "not ({})".format(" or ".join(skips))]
-        else:
-            pytest_args += ["-k", "not ({})".format(" or ".join(skips))]
+    else:  
+        pytest_args += ["-k", "not ({})".format(" or ".join(skips))]
 
     print("Final pytest args:", pytest_args)
 
