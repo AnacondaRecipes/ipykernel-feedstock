@@ -70,7 +70,7 @@ def go():
             pytest_args += ["-k", "not ({})".format(" or ".join(skips))]
         else:
             pytest_args += ["-k", "not {}".format(*skips)]
-    else:  
+    else:
         pytest_args += ["-k", "not ({})".format(" or ".join(skips))]
 
     print("Final pytest args:", pytest_args)
