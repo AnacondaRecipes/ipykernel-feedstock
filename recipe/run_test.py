@@ -11,8 +11,10 @@ import pytest
 def go():
     py_major = sys.version_info[0]
     py_impl = platform.python_implementation().lower()
+    machine = platform.machine().lower()
 
     print("Python implementation:", py_impl)
+    print("              Machine:", machine)
     specfile = os.path.join(
         os.environ["PREFIX"],
         "share",
