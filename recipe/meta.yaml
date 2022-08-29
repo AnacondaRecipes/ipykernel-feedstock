@@ -61,7 +61,6 @@ test:
     - ipyparallel
     - matplotlib-base  # [not (ppc64le and py==310)]
     {% endif %}
-    - pyqt  # [win]
 
   imports:
     - ipykernel
