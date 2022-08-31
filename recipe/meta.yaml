@@ -45,14 +45,14 @@ requirements:
     - psutil
     - pyzmq >=17
     - tornado >=6.1
-    - traitlets >=5.1.0
+    - traitlets >=5.1.0,<6.0
 
 test:
   requires:
     - curio  # [not win]
     - flaky
     - jupyter_client
-    - numpy
+    - numpy >=1.16.1  # introduced numpy.core._multiarray_umath
     - pip
     - pytest >=6.0
     - pytest-cov
