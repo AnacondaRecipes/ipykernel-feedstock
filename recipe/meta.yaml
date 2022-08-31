@@ -44,7 +44,7 @@ requirements:
     - packaging
     - psutil
     - pyzmq >=17
-    - tornado >=6.1
+    - tornado >=6.1,<7.0
     - traitlets >=5.1.0,<6.0
 
 test:
