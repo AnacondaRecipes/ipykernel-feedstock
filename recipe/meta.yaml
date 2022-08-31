@@ -1,9 +1,10 @@
+{% set name = "ipykernel" %}
 {% set version = "6.15.2" %}
 
 {% set migrating = false %}
 
 package:
-  name: ipykernel
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
