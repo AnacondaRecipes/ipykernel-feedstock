@@ -74,6 +74,7 @@ about:
   license: BSD-3-Clause
   license_family: BSD
   license_file: COPYING.md
+  license_url: https://github.com/ipython/ipykernel/blob/main/COPYING.md
   summary: IPython Kernel for Jupyter
   description: |
     A powerful interactive Python shell and a Jupyter kernel to work with
