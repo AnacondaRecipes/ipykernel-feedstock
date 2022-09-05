@@ -1,17 +1,20 @@
 import json
 import os
+import pkgutil
 import platform
 import sys
-import pkgutil
-import pytest
 import tempfile
+
+import pytest
 
 
 def go():
     py_major = sys.version_info[0]
     py_impl = platform.python_implementation().lower()
+    machine = platform.machine().lower()
 
     print("Python implementation:", py_impl)
+    print("              Machine:", machine)
     specfile = os.path.join(
         os.environ["PREFIX"],
         "share",
@@ -56,7 +59,17 @@ def go():
     skips = ["flaky"]
 
     if len(skips) == 1:
-        pytest_args += ["-k", "not {}".format(*skips)]
+        # 2022/8/29: CI issues on Prefect for linux platforms:
+        # The test_shutdown_subprocesses is failing has to do 
+        # with shutting down the system using process groups. 
+        # We put the entire build into a process group.
+        # It looks that the test is checking to see 
+        # that a child process or process group is shutdown after it’s requested to, but it’s not.
+        if platform.system() == "Linux":
+            skips += ["test_shutdown_subprocesses"]
+            pytest_args += ["-k", "not ({})".format(" or ".join(skips))]
+        else:
+            pytest_args += ["-k", "not {}".format(*skips)]
     else:
         pytest_args += ["-k", "not ({})".format(" or ".join(skips))]
 
