@@ -31,6 +31,7 @@ requirements:
     - jupyter_client >=6.1.12
     - packaging
     - pip
+    - comm >=0.1
     - psutil
     - wheel
   run:
