@@ -25,29 +25,24 @@ build:
 requirements:
   host:
     - python
-    - debugpy >=1.0.0
-    - hatchling >=1.4
-    - ipython >=7.23.1
-    - jupyter_client >=6.1.12
-    - packaging
     - pip
-    - comm >=0.1
-    - psutil
+    - setuptools
     - wheel
+    - hatchling 1.8.0
+    - jupyter_client 6.0.0
   run:
-    - appnope  # [osx]
-    - comm >=0.1.1
-    - debugpy >=1.0
+    - debugpy >=1.6.5
     - ipython >=7.23.1
-    - jupyter_client >=6.1.12
-    - matplotlib-inline >=0.1
-    - nest-asyncio
-    - packaging
-    - psutil
-    - python
-    - pyzmq >=17
-    - tornado >=6.1
+    - comm >=0.1.1
     - traitlets >=5.4.0
+    - jupyter_client >=6.1.12
+    - nest-asyncio
+    - tornado >=6.1
+    - matplotlib-inline >=0.1
+    - appnope  # [osx]
+    - pyzmq >=17
+    - psutil
+    - packaging
 
 test:
   requires:
