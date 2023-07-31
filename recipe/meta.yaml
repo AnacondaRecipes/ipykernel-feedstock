@@ -1,5 +1,5 @@
 {% set name = "ipykernel" %}
-{% set version = "6.19.2" %}
+{% set version = "6.25.0" %}
 
 {% set migrating = false %}
 
@@ -9,13 +9,13 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 1ab68d3d3654196266baa93990055413e167263ffbe4cfe834f871bcd3d3506d
+  sha256: e342ce84712861be4b248c4a73472be4702c1b0dd77448bfd6bcfb3af9d5ddf9
 
 build:
   number: 0
   skip: true  # [py<38]
   script:
-    - {{ PYTHON }} -m pip install . --no-deps -vv
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
     - {{ PYTHON }} -m ipykernel install --sys-prefix
     # TODO: this may be needed/desirable at some point
     # - cd {{ RECIPE_DIR }} && {{ PYTHON }} fix_kernelspec.py
