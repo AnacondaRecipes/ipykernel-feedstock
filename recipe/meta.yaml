@@ -28,11 +28,12 @@ requirements:
     - pip
     - setuptools
     - wheel
-    - debugpy
-    - comm
+    - debugpy >=1.6.5
+    - comm >=0.1.1
     - hatchling
-    - ipython
-    - jupyter_client
+    - ipython >=7.23.1
+    - jupyter_client >=6.1.12
+    - jupyter_core >=4.12,!=5.0.*
     - packaging
     - psutil
   run:
@@ -42,11 +43,12 @@ requirements:
     - comm >=0.1.1
     - traitlets >=5.4.0
     - jupyter_client >=6.1.12
+    - jupyter_core >=4.12,!=5.0.*
     - nest-asyncio
     - tornado >=6.1
     - matplotlib-inline >=0.1
     - appnope  # [osx]
-    - pyzmq >=17
+    - pyzmq >=20
     - psutil
     - packaging
 
