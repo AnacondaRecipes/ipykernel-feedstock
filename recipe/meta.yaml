@@ -56,7 +56,6 @@ test:
   requires:
     - curio  # [not win]
     - flaky
-    - jupyter_client
     - numpy
     - pip
     - pytest >=6.0
