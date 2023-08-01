@@ -28,13 +28,13 @@ requirements:
     - pip
     - setuptools
     - wheel
-    - debugpy 1.6.7
-    - comm 0.1.2
-    - hatchling
-    - ipython 7.26.0
-    - jupyter_client 6.1.2
-    - packaging 19.2
-    - psutil 5.8.0
+    - debugpy 1.65
+    - comm 0.1.1
+    - hatchling 1.4
+    - ipython 7.23.1
+    - jupyter_client 6.1.12
+    - packaging
+    - psutil
   run:
     - python
     - debugpy >=1.6.5
