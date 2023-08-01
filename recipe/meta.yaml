@@ -52,7 +52,6 @@ requirements:
 
 test:
   requires:
-    - python
     - curio  # [not win]
     - flaky
     - jupyter_client !=7.3.2=*_0
