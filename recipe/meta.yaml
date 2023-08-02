@@ -64,6 +64,9 @@ test:
     - ipyparallel
     - matplotlib-base
     {% endif %}
+
+  imports:
+    - ipykernel
   commands:
     - pip check
     - jupyter kernelspec list
