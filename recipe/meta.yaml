@@ -64,7 +64,6 @@ test:
     - ipyparallel
     - matplotlib-base
     {% endif %}
-
   commands:
     - pip check
     - jupyter kernelspec list
