@@ -54,6 +54,7 @@ def go():
         "--cov-report",
         "term-missing:skip-covered",
         "--no-cov-on-fail",
+        "--asyncio-mode=auto",
     ]
 
     skips = ["flaky"]
