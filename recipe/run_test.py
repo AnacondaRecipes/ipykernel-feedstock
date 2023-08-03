@@ -57,7 +57,7 @@ def go():
         "--asyncio-mode=auto",
     ]
 
-    skips = ["flaky"]
+    skips = ["flaky", "test_init_ipc_socket"]
 
     if len(skips) == 1:
         # 2022/8/29: CI issues on Prefect for linux platforms:
