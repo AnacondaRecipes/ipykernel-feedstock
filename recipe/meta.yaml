@@ -67,6 +67,7 @@ test:
   commands:
     - pip check
     - jupyter kernelspec list
+    - pytest -k "not test_init_ipc_socket"  # [ppc64le]
 
 about:
   home: https://ipython.org
