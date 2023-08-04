@@ -54,9 +54,12 @@ def go():
         "--cov-report",
         "term-missing:skip-covered",
         "--no-cov-on-fail",
+        "--asyncio-mode=auto",
     ]
 
-    skips = ["flaky"]
+    # 2023/08/03 test_init_ipc_socket needs to be skipped due to builds getting stuck in process.
+    # see https://github.com/open-telemetry/opentelemetry-python/issues/2284
+    skips = ["flaky", "test_init_ipc_socket"]
 
     if len(skips) == 1:
         # 2022/8/29: CI issues on Prefect for linux platforms:

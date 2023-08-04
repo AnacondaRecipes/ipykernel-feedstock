@@ -1,5 +1,5 @@
 {% set name = "ipykernel" %}
-{% set version = "6.19.2" %}
+{% set version = "6.25.0" %}
 
 {% set migrating = false %}
 
@@ -9,13 +9,13 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 1ab68d3d3654196266baa93990055413e167263ffbe4cfe834f871bcd3d3506d
+  sha256: e342ce84712861be4b248c4a73472be4702c1b0dd77448bfd6bcfb3af9d5ddf9
 
 build:
   number: 0
   skip: true  # [py<38]
   script:
-    - {{ PYTHON }} -m pip install . --no-deps -vv
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
     - {{ PYTHON }} -m ipykernel install --sys-prefix
     # TODO: this may be needed/desirable at some point
     # - cd {{ RECIPE_DIR }} && {{ PYTHON }} fix_kernelspec.py
@@ -25,35 +25,34 @@ build:
 requirements:
   host:
     - python
-    - debugpy >=1.0.0
-    - hatchling >=1.4
-    - ipython >=7.23.1
-    - jupyter_client >=6.1.12
-    - packaging
     - pip
-    - comm >=0.1
-    - psutil
+    - setuptools
     - wheel
-  run:
-    - appnope  # [osx]
-    - comm >=0.1.1
-    - debugpy >=1.0
-    - ipython >=7.23.1
+    - hatchling
     - jupyter_client >=6.1.12
-    - matplotlib-inline >=0.1
-    - nest-asyncio
-    - packaging
+    - comm >=0.1.1
+    - ipython >=7.23.1
     - psutil
+  run:
     - python
-    - pyzmq >=17
-    - tornado >=6.1
+    - debugpy >=1.6.5
+    - ipython >=7.23.1
+    - comm >=0.1.1
     - traitlets >=5.4.0
+    - jupyter_client >=6.1.12
+    - jupyter_core >=4.12,!=5.0.*
+    - nest-asyncio
+    - tornado >=6.1
+    - matplotlib-inline >=0.1
+    - appnope  # [osx]
+    - pyzmq >=20
+    - psutil
+    - packaging
 
 test:
   requires:
     - curio  # [not win]
     - flaky
-    - jupyter_client
     - numpy
     - pip
     - pytest >=6.0
@@ -65,9 +64,6 @@ test:
     - ipyparallel
     - matplotlib-base
     {% endif %}
-
-  imports:
-    - ipykernel
   commands:
     - pip check
     - jupyter kernelspec list
@@ -76,15 +72,13 @@ about:
   home: https://ipython.org
   license: BSD-3-Clause
   license_family: BSD
-  license_file: COPYING.md
-  license_url: https://github.com/ipython/ipykernel/blob/main/COPYING.md
+  license_file: LICENSE
   summary: IPython Kernel for Jupyter
   description: |
     A powerful interactive Python shell and a Jupyter kernel to work with
     Python code in Jupyter notebooks and other interactive frontends.
   dev_url: https://github.com/ipython/ipykernel
   doc_url: https://ipython.readthedocs.io
-  doc_source_url: https://github.com/ipython/ipykernel/blob/main/docs/index.rst
 
 extra:
   recipe-maintainers:
