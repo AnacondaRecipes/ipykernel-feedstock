@@ -23,6 +23,9 @@ build:
     # - cd {{ RECIPE_DIR }} && {{ PYTHON }} fix_kernelspec.py
 
 requirements:
+  build:
+    - patch # [unix]
+    - m2-patch # [win]
   host:
     - python
     - pip
