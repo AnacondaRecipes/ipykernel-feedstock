@@ -1,5 +1,5 @@
 {% set name = "ipykernel" %}
-{% set version = "6.25.0" %}
+{% set version = "6.28.0" %}
 
 {% set migrating = false %}
 
@@ -9,7 +9,9 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: e342ce84712861be4b248c4a73472be4702c1b0dd77448bfd6bcfb3af9d5ddf9
+  sha256: 69c11403d26de69df02225916f916b37ea4b9af417da0a8c827f84328d88e5f3
+  patches:
+    - patches/0001-test-conf.patch
 
 build:
   number: 0
@@ -19,15 +21,11 @@ build:
     - {{ PYTHON }} -m ipykernel install --sys-prefix
     # TODO: this may be needed/desirable at some point
     # - cd {{ RECIPE_DIR }} && {{ PYTHON }} fix_kernelspec.py
-  script_env:
-    - MIGRATING={{ migrating }}
 
 requirements:
   host:
     - python
     - pip
-    - setuptools
-    - wheel
     - hatchling
     - jupyter_client >=6.1.12
     - comm >=0.1.1
@@ -45,28 +43,36 @@ requirements:
     - tornado >=6.1
     - matplotlib-inline >=0.1
     - appnope  # [osx]
-    - pyzmq >=20
+    - pyzmq >=24
     - psutil
     - packaging
 
 test:
+  source_files:
+    - pyproject.toml
+    - tests
   requires:
-    - curio  # [not win]
-    - flaky
-    - numpy
     - pip
-    - pytest >=6.0
+# There is a cyclic dependency between ipykernel and ipyparallel. 
+# Re-instate on the next update.
+{% if python != "3.12" %}
+    # test
+    - flaky
+    - pytest >=7.0
     - pytest-asyncio
     - pytest-cov
     - pytest-timeout
+    - ipyparallel 
+    # cov
     - trio
-    {% if not migrating %}
-    - ipyparallel
     - matplotlib-base
-    {% endif %}
+{% endif %}
   commands:
     - pip check
+{% if python != "3.12" %}
     - jupyter kernelspec list
+    - pytest -vv --color=no -s --cov ipykernel --cov-branch --cov-report term-missing:skip-covered --durations 10
+{% endif %}
 
 about:
   home: https://ipython.org

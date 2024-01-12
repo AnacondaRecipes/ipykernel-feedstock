@@ -1,12 +1,8 @@
 import json
 import os
-import pkgutil
 import platform
 import sys
 import tempfile
-
-import pytest
-
 
 def go():
     py_major = sys.version_info[0]
@@ -43,44 +39,6 @@ def go():
             "".format(spec["argv"][0], sys.executable)
         )
         sys.exit(1)
-
-    loader = pkgutil.get_loader("ipykernel.tests")
-    pytest_args = [os.path.dirname(loader.path), "-vv", "--timeout", "300"]
-
-    # coverage options
-    pytest_args += [
-        "--cov",
-        "ipykernel",
-        "--cov-report",
-        "term-missing:skip-covered",
-        "--no-cov-on-fail",
-        "--asyncio-mode=auto",
-    ]
-
-    # 2023/08/03 test_init_ipc_socket needs to be skipped due to builds getting stuck in process.
-    # see https://github.com/open-telemetry/opentelemetry-python/issues/2284
-    skips = ["flaky", "test_init_ipc_socket"]
-
-    if len(skips) == 1:
-        # 2022/8/29: CI issues on Prefect for linux platforms:
-        # The test_shutdown_subprocesses is failing has to do 
-        # with shutting down the system using process groups. 
-        # We put the entire build into a process group.
-        # It looks that the test is checking to see 
-        # that a child process or process group is shutdown after it’s requested to, but it’s not.
-        if platform.system() == "Linux":
-            skips += ["test_shutdown_subprocesses"]
-            pytest_args += ["-k", "not ({})".format(" or ".join(skips))]
-        else:
-            pytest_args += ["-k", "not {}".format(*skips)]
-    else:
-        pytest_args += ["-k", "not ({})".format(" or ".join(skips))]
-
-    print("Final pytest args:", pytest_args)
-
-    # actually run the tests
-    sys.exit(pytest.main(pytest_args))
-
 
 if __name__ == "__main__":
     if platform.system() == "Windows":
