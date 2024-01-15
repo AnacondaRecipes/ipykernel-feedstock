@@ -63,18 +63,16 @@ test:
     - flaky
     - pytest >=7.0
     - pytest-asyncio
-    - pytest-cov
     - pytest-timeout
     - ipyparallel 
-    # cov
-    - trio
-    - matplotlib-base
 {% endif %}
   commands:
     - pip check
 {% if python != "3.12" %}
     - jupyter kernelspec list
-    - pytest -vv --color=no -s --cov ipykernel --cov-branch --cov-report term-missing:skip-covered --durations 10
+    - pytest -vv --color=no # [unix]
+    # Skipping tests on Windows due IO issues. e.g.: An operation was attempted on something that is not a socket
+    - pytest -vv --color=no -k "not (interrupt or test_event_pipe_gc  or test_magics or test_zmq_interactive_shell)" # [win]
 {% endif %}
 
 about:
