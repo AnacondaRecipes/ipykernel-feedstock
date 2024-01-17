@@ -72,6 +72,7 @@ test:
     - jupyter kernelspec list
     - pytest -vv --color=no # [unix]
     # Skipping tests on Windows due to file and socket IO issues.
+    # test_sys_path, test_simple_print, test_init_ipc_socket, test_event_pipe_gc are intermittent
     - pytest -vv --color=no -k "not (test_sys_path or test_simple_print or test_init_ipc_socket or test_event_pipe_gc or test_magics or test_zmq_interactive_shell)" # [win]
 {% endif %}
 

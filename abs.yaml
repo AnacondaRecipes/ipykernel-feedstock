@@ -2,3 +2,5 @@ aggregate_branch: 3.12
 
 channels:
   - https://staging.continuum.io/prefect/fs/trio-feedstock/pr4/2cd6b85
+  - https://staging.continuum.io/prefect/fs/zeromq-feedstock/pr5/4df21d3
+  - https://staging.continuum.io/prefect/fs/pyzmq-feedstock/pr13/107e723
