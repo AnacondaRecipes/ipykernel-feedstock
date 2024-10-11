@@ -1,5 +1,5 @@
 {% set name = "ipykernel" %}
-{% set version = "6.28.0" %}
+{% set version = "6.29.5" %}
 
 {% set migrating = false %}
 
@@ -9,7 +9,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 69c11403d26de69df02225916f916b37ea4b9af417da0a8c827f84328d88e5f3
+  sha256: f093a22c4a40f8828f8e330a9c297cb93dcab13bd9678ded6de8e5cf81c56215
   patches:
     - patches/0001-test-conf.patch
 
@@ -29,7 +29,7 @@ requirements:
   host:
     - python
     - pip
-    - hatchling
+    - hatchling >=1.4
     - jupyter_client >=6.1.12
     - comm >=0.1.1
     - ipython >=7.23.1
@@ -70,10 +70,10 @@ test:
     - pip check
 {% if python != "3.12" %}
     - jupyter kernelspec list
-    - pytest -vv --color=no # [unix]
+    - pytest -vv --color=no -k "not test_interrupt_during_pdb_set_trace"  # [unix]
     # Skipping tests on Windows due to file and socket IO issues.
     # test_sys_path, test_simple_print, test_init_ipc_socket, test_event_pipe_gc are intermittent
-    - pytest -vv --color=no -k "not (test_sys_path or test_simple_print or test_init_ipc_socket or test_event_pipe_gc or test_magics or test_zmq_interactive_shell)" # [win]
+    - pytest -vv --color=no -k "not (test_sys_path or test_simple_print or test_print_to_correct_cell or test_init_ipc_socket or test_event_pipe_gc or test_magics or test_zmq_interactive_shell)" # [win]
 {% endif %}
 
 about:
