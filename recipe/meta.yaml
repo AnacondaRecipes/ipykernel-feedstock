@@ -14,7 +14,7 @@ source:
     - patches/0001-test-conf.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<38]
   script:
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
@@ -58,7 +58,7 @@ test:
     - pip
 # There is a cyclic dependency between ipykernel and ipyparallel. 
 # Re-instate on the next update.
-{% if python != "3.12" %}
+{% if python != "3.13" %}
     # test
     - flaky
     - pytest >=7.0
@@ -68,7 +68,7 @@ test:
 {% endif %}
   commands:
     - pip check
-{% if python != "3.12" %}
+{% if python != "3.13" %}
     - jupyter kernelspec list
     - pytest -vv --color=no -k "not test_interrupt_during_pdb_set_trace"  # [unix]
     # Skipping tests on Windows due to file and socket IO issues.
