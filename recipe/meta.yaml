@@ -67,16 +67,21 @@ test:
     - tests
   requires:
     - pip
+# cyclic dependency between ipykernel and ipyparallel / jupyter_client 
+{% if python != "3.13" %}
     # test
     - flaky
     - pytest >=7.0
     - pytest-asyncio
     - pytest-timeout
     #- ipyparallel 
+{% endif %}
   commands:
     - pip check
+{% if python != "3.13" %}
     - jupyter kernelspec list
     - pytest -vv --color=no -k "not ({{ tests_to_skip }})"
+{% endif %}
 
 about:
   home: https://ipython.org
