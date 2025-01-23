@@ -14,7 +14,7 @@ source:
     - patches/0001-test-conf.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<38]
   script:
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
@@ -50,30 +50,37 @@ requirements:
     - psutil
     - packaging
 
+{% set tests_to_skip = "_not_a_real_test" %}
+
+{% set tests_to_skip = tests_to_skip + " or test_interrupt_during_pdb_set_trace" %} # [unix]
+
+# Skipping tests on Windows due to file and socket IO issues.
+# test_sys_path, test_simple_print, test_init_ipc_socket, test_event_pipe_gc are intermittent
+{% set tests_to_skip = tests_to_skip + " or test_sys_path or test_simple_print or test_print_to_correct_cell or test_init_ipc_socket or test_event_pipe_gc or test_magics or test_zmq_interactive_shell" %} # [win]
+
+# Skipping tests requiring ipyparallel - There is a cyclic dependency between ipykernel and ipyparallel. 
+{% set tests_to_skip = tests_to_skip + " or test_do_apply or test_no_closure or test_generator_closure or test_nested_closure or test_closure" %}
+
 test:
   source_files:
     - pyproject.toml
     - tests
   requires:
     - pip
-# There is a cyclic dependency between ipykernel and ipyparallel. 
-# Re-instate on the next update.
-{% if python != "3.12" %}
+# cyclic dependency between ipykernel and ipyparallel / jupyter_client 
+{% if python != "3.13" %}
     # test
     - flaky
     - pytest >=7.0
     - pytest-asyncio
     - pytest-timeout
-    - ipyparallel 
+    #- ipyparallel 
 {% endif %}
   commands:
     - pip check
-{% if python != "3.12" %}
+{% if python != "3.13" %}
     - jupyter kernelspec list
-    - pytest -vv --color=no -k "not test_interrupt_during_pdb_set_trace"  # [unix]
-    # Skipping tests on Windows due to file and socket IO issues.
-    # test_sys_path, test_simple_print, test_init_ipc_socket, test_event_pipe_gc are intermittent
-    - pytest -vv --color=no -k "not (test_sys_path or test_simple_print or test_print_to_correct_cell or test_init_ipc_socket or test_event_pipe_gc or test_magics or test_zmq_interactive_shell)" # [win]
+    - pytest -vv --color=no -k "not ({{ tests_to_skip }})"
 {% endif %}
 
 about:
