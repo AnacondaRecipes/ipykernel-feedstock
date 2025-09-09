@@ -66,7 +66,7 @@ test:
     - pip
 # cyclic dependency between ipykernel and ipyparallel / jupyter_client 
     - flaky
-    - pytest >=7.0
+    - pytest >=7.0,<9
     - pytest-asyncio
     - pytest-timeout
     #- ipyparallel 
