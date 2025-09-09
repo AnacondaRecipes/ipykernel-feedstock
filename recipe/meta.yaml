@@ -83,7 +83,7 @@ about:
     A powerful interactive Python shell and a Jupyter kernel to work with
     Python code in Jupyter notebooks and other interactive frontends.
   dev_url: https://github.com/ipython/ipykernel
-  doc_url: https://ipython.readthedocs.io
+  doc_url: https://ipykernel.readthedocs.io
 
 extra:
   recipe-maintainers:
