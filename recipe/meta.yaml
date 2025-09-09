@@ -30,25 +30,25 @@ requirements:
     - python
     - pip
     - hatchling >=1.4
-    - jupyter_client >=6.1.12
-    - comm >=0.1.1
+    - jupyter_client >=6
     - ipython >=7.23.1
-    - psutil
+    - comm >=0.1.1
+    - psutil >=5.7
   run:
     - python
     - debugpy >=1.6.5
     - ipython >=7.23.1
     - comm >=0.1.1
     - traitlets >=5.4.0
-    - jupyter_client >=6.1.12
+    - jupyter_client >=8.0.0
     - jupyter_core >=4.12,!=5.0.*
-    - nest-asyncio
-    - tornado >=6.1
+    - nest-asyncio >=1.4
+    - tornado >=6.2
     - matplotlib-inline >=0.1
-    - appnope  # [osx]
-    - pyzmq >=24
-    - psutil
-    - packaging
+    - appnope >=0.1.2  # [osx]
+    - pyzmq >=25
+    - psutil >=5.7
+    - packaging >=22
 
 {% set tests_to_skip = "_not_a_real_test" %}
 
