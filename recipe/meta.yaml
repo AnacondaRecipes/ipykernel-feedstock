@@ -10,12 +10,12 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 6abb270161896402e76b91394fcdce5d1be5d45f456671e5080572f8505be39b
-  patches:
-    - patches/0001-test-conf.patch
+  #patches:
+  #  - patches/0001-test-conf.patch
 
 build:
   number: 0
-  skip: true  # [py<38]
+  skip: true  # [py<39]
   script:
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
     - {{ PYTHON }} -m ipykernel install --sys-prefix
