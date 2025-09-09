@@ -53,7 +53,7 @@ requirements:
 # test_sys_path, test_simple_print, test_init_ipc_socket, test_event_pipe_gc are intermittent
 {% set tests_to_skip = tests_to_skip + " or test_sys_path or test_simple_print or test_print_to_correct_cell or test_init_ipc_socket or test_event_pipe_gc or test_magics or test_zmq_interactive_shell" %} # [win]
 # pytest.PytestUnhandledThreadExceptionWarning: Exception in thread IOPub
-{% set tests_to_skip = tests_to_skip + " or test_lambda or test_exception" %} # [win]
+{% set tests_to_skip = tests_to_skip + " or test_lambda or test_exception or test_capture_fd" %} # [win]
 
 # Skipping tests requiring ipyparallel - There is a cyclic dependency between ipykernel and ipyparallel. 
 {% set tests_to_skip = tests_to_skip + " or test_do_apply or test_no_closure or test_generator_closure or test_nested_closure or test_closure" %}
