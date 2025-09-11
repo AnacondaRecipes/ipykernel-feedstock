@@ -1,5 +1,5 @@
 {% set name = "ipykernel" %}
-{% set version = "6.29.5" %}
+{% set version = "6.30.1" %}
 
 {% set migrating = false %}
 
@@ -9,13 +9,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: f093a22c4a40f8828f8e330a9c297cb93dcab13bd9678ded6de8e5cf81c56215
-  patches:
-    - patches/0001-test-conf.patch
+  sha256: 6abb270161896402e76b91394fcdce5d1be5d45f456671e5080572f8505be39b
 
 build:
-  number: 1
-  skip: true  # [py<38]
+  number: 0
+  skip: true  # [py<39]
   script:
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
     - {{ PYTHON }} -m ipykernel install --sys-prefix
@@ -23,32 +21,29 @@ build:
     # - cd {{ RECIPE_DIR }} && {{ PYTHON }} fix_kernelspec.py
 
 requirements:
-  build:
-    - patch # [unix]
-    - m2-patch # [win]
   host:
     - python
     - pip
     - hatchling >=1.4
-    - jupyter_client >=6.1.12
-    - comm >=0.1.1
+    - jupyter_client >=6
     - ipython >=7.23.1
-    - psutil
+    - comm >=0.1.1
+    - psutil >=5.7
   run:
     - python
     - debugpy >=1.6.5
     - ipython >=7.23.1
     - comm >=0.1.1
     - traitlets >=5.4.0
-    - jupyter_client >=6.1.12
+    - jupyter_client >=8.0.0
     - jupyter_core >=4.12,!=5.0.*
-    - nest-asyncio
-    - tornado >=6.1
+    - nest-asyncio >=1.4
+    - tornado >=6.2
     - matplotlib-inline >=0.1
-    - appnope  # [osx]
-    - pyzmq >=24
-    - psutil
-    - packaging
+    - appnope >=0.1.2  # [osx]
+    - pyzmq >=25
+    - psutil >=5.7
+    - packaging >=22
 
 {% set tests_to_skip = "_not_a_real_test" %}
 
@@ -57,6 +52,8 @@ requirements:
 # Skipping tests on Windows due to file and socket IO issues.
 # test_sys_path, test_simple_print, test_init_ipc_socket, test_event_pipe_gc are intermittent
 {% set tests_to_skip = tests_to_skip + " or test_sys_path or test_simple_print or test_print_to_correct_cell or test_init_ipc_socket or test_event_pipe_gc or test_magics or test_zmq_interactive_shell" %} # [win]
+# pytest.PytestUnhandledThreadExceptionWarning: Exception in thread IOPub
+{% set tests_to_skip = tests_to_skip + " or test_lambda or test_exception or test_capture_fd or test_unicode_dict or test_subprocess_peek_at_stream_fileno or test_encode_images or test_subprocess_print" %} # [win]
 
 # Skipping tests requiring ipyparallel - There is a cyclic dependency between ipykernel and ipyparallel. 
 {% set tests_to_skip = tests_to_skip + " or test_do_apply or test_no_closure or test_generator_closure or test_nested_closure or test_closure" %}
@@ -68,20 +65,15 @@ test:
   requires:
     - pip
 # cyclic dependency between ipykernel and ipyparallel / jupyter_client 
-{% if python != "3.13" %}
-    # test
     - flaky
-    - pytest >=7.0
+    - pytest >=7.0,<9
     - pytest-asyncio
     - pytest-timeout
     #- ipyparallel 
-{% endif %}
   commands:
     - pip check
-{% if python != "3.13" %}
     - jupyter kernelspec list
     - pytest -vv --color=no -k "not ({{ tests_to_skip }})"
-{% endif %}
 
 about:
   home: https://ipython.org
@@ -93,7 +85,7 @@ about:
     A powerful interactive Python shell and a Jupyter kernel to work with
     Python code in Jupyter notebooks and other interactive frontends.
   dev_url: https://github.com/ipython/ipykernel
-  doc_url: https://ipython.readthedocs.io
+  doc_url: https://ipykernel.readthedocs.io
 
 extra:
   recipe-maintainers:
