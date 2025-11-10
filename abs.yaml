@@ -1,2 +1,7 @@
 build_env_vars:
   ANACONDA_ROCKET_ENABLE_PY314 : yes
+
+channels: 
+  - https://staging.continuum.io/pbp/fs/matplotlib-inline-feedstock/pr4/240189b
+  - https://staging.continuum.io/pbp/fs/parso-feedstock/pr4/0534e90
+  - https://staging.continuum.io/pbp/fs/ipython-feedstock/pr50/b064335

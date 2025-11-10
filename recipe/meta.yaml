@@ -60,11 +60,11 @@ test:
   requires:
     - pip
     # cyclic dependency between ipykernel and ipyparallel / jupyter_client
+    #- ipyparallel
     - flaky
     - pytest >=7.0,<9
     - pytest-asyncio >=0.23.5
     - pytest-timeout
-  #- ipyparallel
   commands:
     - pip check
     - jupyter kernelspec list
