@@ -64,6 +64,10 @@ test:
     - flaky
     - pytest >=7.0,<9
     - pytest-asyncio >=0.23.5
+    # The 6 failing tests in test_subshells.py::test_run_concurrently_sequence all fail 
+    # because the test code attempts to check for pytest's --cov option (from pytest-cov plugin) 
+    # but doesn't handle the case where the option doesn't exist, causing ValueError: no option named '--cov'.
+    - pytest-cov
     - pytest-timeout
   commands:
     - pip check
