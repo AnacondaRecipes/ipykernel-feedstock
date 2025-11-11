@@ -62,9 +62,10 @@ def check_kernel() -> int:
 
 def build_pytest_args() -> typing.List[str]:
     pytest_args = [
-        "--color=yes",
+        "--color=no",
         "--tb=long",
         "-vv",
+        "-W", "ignore::DeprecationWarning",
         "--timeout=300",
         "--asyncio-mode=auto",
     ]
