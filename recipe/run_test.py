@@ -1,4 +1,3 @@
-# filename: run_test.py
 import json
 import os
 import platform
@@ -70,11 +69,11 @@ def build_pytest_args() -> typing.List[str]:
         "--asyncio-mode=auto",
     ]
 
-    if py_impl != "pypy":
-        # coverage is very slow on pypy
+    # Skip coverage on PyPy (slow) and Windows (C extension issues)
+    if py_impl != "pypy" and not is_win:
         pytest_args += [
             "--cov=ipykernel",
-            "--cov=branch",
+            "--cov-branch",
             "--cov-report=term-missing:skip-covered",
             "--no-cov-on-fail",
         ]
