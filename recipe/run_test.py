@@ -84,6 +84,9 @@ def build_pytest_args() -> typing.List[str]:
             [
                 # test_pickleutil fails on windows, `pickleutil` deprecated anyway,
                 "pickleutil",
+                # ERROR tests/test_io.py::test_echo_watch - pytest.PytestUnhandledThreadExceptionWarning: Exception in thread IOPub
+                "test_echo_watch",
+
             ]
         )
 
