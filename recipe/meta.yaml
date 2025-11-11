@@ -47,19 +47,6 @@ requirements:
     - tornado >=6.2
     - traitlets >=5.4.0
 
-{% set tests_to_skip = "_not_a_real_test" %}
-
-{% set tests_to_skip = tests_to_skip + " or test_interrupt_during_pdb_set_trace" %} # [unix]
-
-# Skipping tests on Windows due to file and socket IO issues.
-# test_sys_path, test_simple_print, test_init_ipc_socket, test_event_pipe_gc are intermittent
-{% set tests_to_skip = tests_to_skip + " or test_sys_path or test_simple_print or test_print_to_correct_cell or test_init_ipc_socket or test_event_pipe_gc or test_magics or test_zmq_interactive_shell" %} # [win]
-# pytest.PytestUnhandledThreadExceptionWarning: Exception in thread IOPub
-{% set tests_to_skip = tests_to_skip + " or test_lambda or test_exception or test_capture_fd or test_unicode_dict or test_subprocess_peek_at_stream_fileno or test_encode_images or test_subprocess_print" %} # [win]
-
-# Skipping tests requiring ipyparallel - There is a cyclic dependency between ipykernel and ipyparallel. 
-{% set tests_to_skip = tests_to_skip + " or test_do_apply or test_no_closure or test_generator_closure or test_nested_closure or test_closure" %}
-
 test:
   source_files:
     - pyproject.toml

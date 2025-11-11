@@ -1,3 +1,4 @@
+# filename: run_test.py
 import json
 import os
 import platform
@@ -8,6 +9,15 @@ from pathlib import Path
 
 # TODO: investigate upstream interrupt regression in 6.5.0
 test_skips = ["flaky", "interrupt"]
+
+# Add tests requiring ipyparallel (cyclic dependency)
+test_skips.extend([
+    "test_do_apply",
+    "test_no_closure", 
+    "test_generator_closure",
+    "test_nested_closure",
+    "test_closure"
+])
 
 py_major = sys.version_info[0]
 py_impl = platform.python_implementation().lower()
@@ -37,7 +47,7 @@ def check_kernel() -> int:
 
     spec = json.loads(raw_spec)
 
-    print("""Checking python executable: {spec["argv"][0]}""")
+    print(f"""Checking python executable: {spec["argv"][0]}""")
 
     if spec["argv"][0].replace("\\", "/") != sys.executable.replace("\\", "/"):
         print(
@@ -79,7 +89,7 @@ def build_pytest_args() -> typing.List[str]:
 
     if len(test_skips) == 1:
         # single-term parens work unexpectedly
-        pytest_args += ["-k", f"not {test_skips}"]
+        pytest_args += ["-k", f"not {test_skips[0]}"]
     elif len(test_skips) > 1:
         pytest_args += ["-k", f"""not ({" or ".join(test_skips)})"""]
 
