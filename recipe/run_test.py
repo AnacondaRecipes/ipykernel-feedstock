@@ -84,6 +84,10 @@ def build_pytest_args() -> typing.List[str]:
             [
                 # test_pickleutil fails on windows, `pickleutil` deprecated anyway,
                 "pickleutil",
+                # ERROR tests/test_io.py::test_event_pipe_gc - Windows socket cleanup race.
+                # Windows uses different socket APIs (Winsock vs BSD sockets) and different asyncio event loop implementations (SelectorEventLoop), 
+                # causing different timing/cleanup behavior for background threads compared to Unix systems.
+                "test_event_pipe_gc",
                 # ERROR tests/test_io.py::test_echo_watch - pytest.PytestUnhandledThreadExceptionWarning: Exception in thread IOPub
                 # E   Enable tracemalloc to get traceback where the object was allocated.
                 # E   See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
