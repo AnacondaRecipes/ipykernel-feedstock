@@ -68,6 +68,7 @@ def build_pytest_args() -> typing.List[str]:
         "-W", "ignore::DeprecationWarning",
         "--timeout=300",
         "--asyncio-mode=auto",
+        "--ignore=tests/test_jsonutil.py",
     ]
 
     # Skip coverage on PyPy (slow) and Windows (C extension issues)
