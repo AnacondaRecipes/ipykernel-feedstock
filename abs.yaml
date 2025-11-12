@@ -1,7 +1,2 @@
 build_env_vars:
   ANACONDA_ROCKET_ENABLE_PY314 : yes
-
-channels:
-  - https://staging.continuum.io/pbp/fs/bcrypt-feedstock/pr7/65478bd
-  - https://staging.continuum.io/pbp/fs/paramiko-feedstock/pr12/17d5773
-  - https://staging.continuum.io/pbp/fs/jupyter_client-feedstock/pr30/6b80720
