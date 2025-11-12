@@ -1,5 +1,5 @@
 {% set name = "ipykernel" %}
-{% set version = "6.30.1" %}
+{% set version = "6.31.0" %}
 
 {% set migrating = false %}
 
@@ -8,8 +8,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 6abb270161896402e76b91394fcdce5d1be5d45f456671e5080572f8505be39b
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2372ce8bc1ff4f34e58cafed3a0feb2194b91fc7cad0fc72e79e47b45ee9e8f6
 
 build:
   number: 0
@@ -19,44 +19,33 @@ build:
     - {{ PYTHON }} -m ipykernel install --sys-prefix
     # TODO: this may be needed/desirable at some point
     # - cd {{ RECIPE_DIR }} && {{ PYTHON }} fix_kernelspec.py
+  script_env:
+    - MIGRATING={{ migrating }}
 
 requirements:
   host:
     - python
     - pip
-    - hatchling >=1.4
+    - hatchling >=1.22
     - jupyter_client >=6
     - ipython >=7.23.1
     - comm >=0.1.1
     - psutil >=5.7
   run:
     - python
+    - appnope >=0.1.2  # [osx]
+    - comm >=0.1.1
     - debugpy >=1.6.5
     - ipython >=7.23.1
-    - comm >=0.1.1
-    - traitlets >=5.4.0
     - jupyter_client >=8.0.0
     - jupyter_core >=4.12,!=5.0.*
-    - nest-asyncio >=1.4
-    - tornado >=6.2
     - matplotlib-inline >=0.1
-    - appnope >=0.1.2  # [osx]
-    - pyzmq >=25
-    - psutil >=5.7
+    - nest-asyncio >=1.4
     - packaging >=22
-
-{% set tests_to_skip = "_not_a_real_test" %}
-
-{% set tests_to_skip = tests_to_skip + " or test_interrupt_during_pdb_set_trace" %} # [unix]
-
-# Skipping tests on Windows due to file and socket IO issues.
-# test_sys_path, test_simple_print, test_init_ipc_socket, test_event_pipe_gc are intermittent
-{% set tests_to_skip = tests_to_skip + " or test_sys_path or test_simple_print or test_print_to_correct_cell or test_init_ipc_socket or test_event_pipe_gc or test_magics or test_zmq_interactive_shell" %} # [win]
-# pytest.PytestUnhandledThreadExceptionWarning: Exception in thread IOPub
-{% set tests_to_skip = tests_to_skip + " or test_lambda or test_exception or test_capture_fd or test_unicode_dict or test_subprocess_peek_at_stream_fileno or test_encode_images or test_subprocess_print" %} # [win]
-
-# Skipping tests requiring ipyparallel - There is a cyclic dependency between ipykernel and ipyparallel. 
-{% set tests_to_skip = tests_to_skip + " or test_do_apply or test_no_closure or test_generator_closure or test_nested_closure or test_closure" %}
+    - psutil >=5.7
+    - pyzmq >=25
+    - tornado >=6.2
+    - traitlets >=5.4.0
 
 test:
   source_files:
@@ -64,16 +53,23 @@ test:
     - tests
   requires:
     - pip
-# cyclic dependency between ipykernel and ipyparallel / jupyter_client 
+    # cyclic dependency between ipykernel and ipyparallel / jupyter_client
+    #- ipyparallel
+    - curio  # [not win]
     - flaky
+    - matplotlib-base
+    - numpy
     - pytest >=7.0,<9
-    - pytest-asyncio
+    - pytest-asyncio >=0.23.5
+    # The 6 failing tests in test_subshells.py::test_run_concurrently_sequence all fail 
+    # because the test code attempts to check for pytest's --cov option (from pytest-cov plugin) 
+    # but doesn't handle the case where the option doesn't exist, causing ValueError: no option named '--cov'.
+    - pytest-cov
     - pytest-timeout
-    #- ipyparallel 
   commands:
     - pip check
     - jupyter kernelspec list
-    - pytest -vv --color=no -k "not ({{ tests_to_skip }})"
+    - python run_test.py
 
 about:
   home: https://ipython.org
