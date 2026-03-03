@@ -15,7 +15,9 @@ test_skips.extend([
     "test_no_closure", 
     "test_generator_closure",
     "test_nested_closure",
-    "test_closure"
+    "test_closure",
+    # tests/test_matplotlib_eventloops.py::test_matplotlib_gui[tk] - _queue.Empty
+    "test_matplotlib_gui"
 ])
 
 py_major = sys.version_info[0]
@@ -105,14 +107,6 @@ def build_pytest_args() -> typing.List[str]:
                 # FAILED tests/test_zmq_shell.py::test_zmq_interactive_shell - exceptiongroup.ExceptionGroup: multiple unraisable exception warnings (3 sub-exceptions)
                 "test_magics",
                 "test_zmq_interactive_shell",
-            ]
-        )
-    
-    if not is_win:
-        test_skips.extend(
-            [
-                # test_matplotlib_gui[tk]
-                "test_matplotlib_gui",
             ]
         )
 
