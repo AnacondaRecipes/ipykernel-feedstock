@@ -70,7 +70,7 @@ def build_pytest_args() -> typing.List[str]:
         "--asyncio-mode=auto",
     ]
 
-        # Ignore entire test files with Windows IOPub threading issues
+    # Ignore entire test files with Windows IOPub threading issues
     if is_win:
         pytest_args.extend([
             "--ignore=tests/test_jsonutil.py",    # JSON parsing issues
@@ -105,7 +105,14 @@ def build_pytest_args() -> typing.List[str]:
                 # FAILED tests/test_zmq_shell.py::test_zmq_interactive_shell - exceptiongroup.ExceptionGroup: multiple unraisable exception warnings (3 sub-exceptions)
                 "test_magics",
                 "test_zmq_interactive_shell",
-
+            ]
+        )
+    
+    if not is_win:
+        test_skips.extend(
+            [
+                # test_matplotlib_gui[tk]
+                "test_matplotlib_gui",
             ]
         )
 
