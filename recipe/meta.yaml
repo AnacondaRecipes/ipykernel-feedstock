@@ -1,7 +1,6 @@
 {% set name = "ipykernel" %}
-{% set version = "6.31.0" %}
-
-{% set migrating = false %}
+{% set version = "7.2.0" %}
+{% set migrating = "false" %}
 
 package:
   name: {{ name|lower }}
@@ -9,11 +8,11 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 2372ce8bc1ff4f34e58cafed3a0feb2194b91fc7cad0fc72e79e47b45ee9e8f6
+  sha256: 18ed160b6dee2cbb16e5f3575858bc19d8f1fe6046a9a680c708494ce31d909e
 
 build:
   number: 0
-  skip: true  # [py<39]
+  skip: true  # [py<310]
   script:
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
     - {{ PYTHON }} -m ipykernel install --sys-prefix
@@ -33,19 +32,19 @@ requirements:
     - psutil >=5.7
   run:
     - python
-    - appnope >=0.1.2  # [osx]
-    - comm >=0.1.1
     - debugpy >=1.6.5
     - ipython >=7.23.1
-    - jupyter_client >=8.0.0
-    - jupyter_core >=4.12,!=5.0.*
-    - matplotlib-inline >=0.1
-    - nest-asyncio >=1.4
-    - packaging >=22
-    - psutil >=5.7
-    - pyzmq >=25
-    - tornado >=6.2
+    - comm >=0.1.1
     - traitlets >=5.4.0
+    - jupyter_client >=8.8.0
+    - jupyter_core >=5.1,!=6.0.*
+    - nest-asyncio >=1.4
+    - tornado >=6.4.1
+    - matplotlib-inline >=0.1
+    - appnope >=0.1.2  # [osx]
+    - pyzmq >=25
+    - psutil >=5.7
+    - packaging >=22
 
 test:
   source_files:
@@ -59,10 +58,10 @@ test:
     - flaky
     - matplotlib-base
     - numpy
-    - pytest >=7.0,<9
+    - pytest >=7.0,<10
     - pytest-asyncio >=0.23.5
-    # The 6 failing tests in test_subshells.py::test_run_concurrently_sequence all fail 
-    # because the test code attempts to check for pytest's --cov option (from pytest-cov plugin) 
+    # The 6 failing tests in test_subshells.py::test_run_concurrently_sequence all fail
+    # because the test code attempts to check for pytest's --cov option (from pytest-cov plugin)
     # but doesn't handle the case where the option doesn't exist, causing ValueError: no option named '--cov'.
     - pytest-cov
     - pytest-timeout
