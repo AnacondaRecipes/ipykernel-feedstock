@@ -1,5 +1,5 @@
 {% set name = "ipykernel" %}
-{% set version = "7.2.0" %}
+{% set version = "7.3.0" %}
 {% set migrating = "false" %}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 18ed160b6dee2cbb16e5f3575858bc19d8f1fe6046a9a680c708494ce31d909e
+  sha256: 9acaaaf97d16355166e4085afe9d225bfbdf2b7ef520f9df3be8f2b248275e09
 
 build:
   number: 0
@@ -36,7 +36,7 @@ requirements:
     - ipython >=7.23.1
     - comm >=0.1.1
     - traitlets >=5.4.0
-    - jupyter_client >=8.8.0
+    - jupyter_client >=8.9.0
     - jupyter_core >=5.1,!=6.0.*
     - nest-asyncio >=1.4
     - tornado >=6.4.1
@@ -45,6 +45,7 @@ requirements:
     - pyzmq >=25
     - psutil >=5.7
     - packaging >=22
+    - nest-asyncio2 >=1.7.0
 
 test:
   source_files:
