@@ -3,7 +3,7 @@
 {% set migrating = "false" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
