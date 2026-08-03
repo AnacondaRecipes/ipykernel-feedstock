@@ -38,7 +38,6 @@ requirements:
     - traitlets >=5.4.0
     - jupyter_client >=8.9.0
     - jupyter_core >=5.1,!=6.0.*
-    - nest-asyncio >=1.4
     - tornado >=6.4.1
     - matplotlib-inline >=0.1
     - appnope >=0.1.2  # [osx]
