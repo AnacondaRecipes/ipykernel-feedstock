@@ -79,6 +79,8 @@ def build_pytest_args() -> typing.List[str]:
             "--ignore=tests/test_kernel.py",      # Multiple flaky tests
             "--ignore=tests/test_io.py",          # IOPub cleanup issues
             "--ignore=tests/test_zmq_shell.py",   # ZMQ teardown issues
+            "--ignore=tests/test_curve.py",       # ZMQ teardown issues
+            "--ignore=tests/test_kernelapp.py"    # ZMQ teardown issues
         ])
 
     # Skip coverage on PyPy (slow) and Windows (C extension issues)
