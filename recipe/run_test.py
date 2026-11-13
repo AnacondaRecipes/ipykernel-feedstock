@@ -17,7 +17,12 @@ test_skips.extend([
     "test_nested_closure",
     "test_closure",
     # tests/test_matplotlib_eventloops.py::test_matplotlib_gui[tk] - _queue.Empty
-    "test_matplotlib_gui"
+    "test_matplotlib_gui",
+    # tests/test_debugger.py::test_attach_debug - the 6.31.0 sdist asserts an empty
+    # result for a "repl" evaluate, which was debugpy < 1.8.21 behaviour. debugpy
+    # 1.8.21 (current in defaults) returns the actual value ('ab'), so the assertion
+    # fails. Upstream fixed the test itself in 7.x with a debugpy version guard.
+    "test_attach_debug"
 ])
 
 py_major = sys.version_info[0]
